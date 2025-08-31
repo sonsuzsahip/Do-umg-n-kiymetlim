@@ -97,6 +97,24 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .button {
+            display: inline-block;
+            background-color: #d84357;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -110,12 +128,15 @@
 
         <p class="message" id="cutMessage">İyi ki doğdun, iyi ki varsın benim kıymetlim! ❤️</p>
         <p class="small-message" id="afterCutMessage">Mutlu, huzurlu senelerimiz ve en güzel günlerimiz olsun! Seni çok seviyorum!</p>
+        
+        <a href="mektup.html" class="button" id="mektupButton" style="display: none;">Mektubun Burada!</a>
     </div>
 
     <script>
         const cakeContainer = document.getElementById('cakeContainer');
         const cutMessage = document.getElementById('cutMessage');
         const afterCutMessage = document.getElementById('afterCutMessage');
+        const mektupButton = document.getElementById('mektupButton');
         let isCakeCut = false;
 
         cakeContainer.addEventListener('click', () => {
@@ -127,6 +148,10 @@
                 setTimeout(() => {
                     afterCutMessage.classList.add('show');
                 }, 1500);
+
+                setTimeout(() => {
+                    mektupButton.style.display = 'inline-block';
+                }, 3000); // Pasta kesildikten 3 saniye sonra butonu göster
             }
         });
     </script>
