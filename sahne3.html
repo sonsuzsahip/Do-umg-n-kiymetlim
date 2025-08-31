@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doğum Günün Kutlu Olsun!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient_to_bottom_right_#ffe4e1_#fff0f5;
+            color: #4a4a4a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            color: #d84357;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .cake-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+
+        .cake-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease-out;
+            border-radius: 10px;
+        }
+
+        .cut-animation .cake-image {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .message {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2em;
+            color: #d84357;
+            margin-top: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .small-message {
+            font-size: 1em;
+            color: #6a6a6a;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .small-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pastanı Kes!</h1>
+        <p>Dileğini tuttuğuna göre, pastandan bir dilim kesme zamanı!</p>
+
+        <div class="cake-container" id="cakeContainer">
+            <img src="cake.png" alt="Doğum Günü Pastası" class="cake-image" id="cakeImage">
+        </div>
+
+        <p class="message" id="cutMessage">İyi ki doğdun, iyi ki varsın benim kıymetlim! ❤️</p>
+        <p class="small-message" id="afterCutMessage">Mutlu, huzurlu senelerimiz ve en güzel günlerimiz olsun! Seni çok seviyorum!</p>
+    </div>
+
+    <script>
+        const cakeContainer = document.getElementById('cakeContainer');
+        const cutMessage = document.getElementById('cutMessage');
+        const afterCutMessage = document.getElementById('afterCutMessage');
+        let isCakeCut = false;
+
+        cakeContainer.addEventListener('click', () => {
+            if (!isCakeCut) {
+                cakeContainer.classList.add('cut-animation');
+                cutMessage.classList.add('show');
+                isCakeCut = true;
+                
+                setTimeout(() => {
+                    afterCutMessage.classList.add('show');
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
