@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastanı Kes Canım!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient_to_bottom_right_#ffe4e1_#fff0f5;
+            color: #4a4a4a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 900px;
+            margin: 20px;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4em;
+            color: #d84357;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            color: #d84357;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .cake-container {
+            position: relative;
+            width: 400px; /* Pastanın genişliği */
+            height: 400px; /* Pastanın yüksekliği */
+            margin: 40px auto;
+            cursor: default; /* Başlangıçta imleci değiştir */
+        }
+
+        .cake-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease-out;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cut-animation .cake-image {
+            transform: scale(1.05) rotate(2deg); /* Kesilirken hafifçe büyüme ve dönme */
+        }
+
+        .message {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8em;
+            color: #d84357;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+            line-height: 1.3;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .small-message {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.3em;
+            color: #6a6a6a;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .small-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .poem {
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            margin: 30px auto;
+            padding: 20px;
+            border-left: 5px solid #d84357;
+            background-color: #fffafa;
+            max-width: 600px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .poem p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        /* Konfeti animasyonu */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #d84357; /* Pembe */
+            opacity: 0;
+            border-radius: 50%;
+            animation: confettiFall 3s forwards;
+            z-index: 0; /* Pastanın arkasında kalması için */
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotateZ(0deg);
+                opacity: 1;
+                background-color: #d84357;
+            }
+            25% { background-color: #f7b731; /* Sarı */ }
+            50% { background-color: #4facfe; /* Mavi */ }
+            75% { background-color: #27ae60; /* Yeşil */ }
+            100% {
+                transform: translateY(500px) rotateZ(720deg);
+                opacity: 0;
+                background-color: #d84357;
+            }
+        }
+
+        /* Ekstra kalp animasyonları */
+        .heart {
+            position: absolute;
+            background-color: #d84357;
+            transform: rotate(-45deg);
+            animation: floatHearts 10s infinite ease-in-out;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #d84357;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 50%;
+        }
+
+        .heart:nth-child(1) { width: 20px; height: 20px; left: 10%; top: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { width: 30px; height: 30px; left: 25%; top: 30%; animation-delay: 2s; }
+        .heart:nth-child(3) { width: 25px; height: 25px; left: 50%; top: 5%; animation-delay: 4s; }
+        .heart:nth-child(4) { width: 35px; height: 35px; left: 70%; top: 40%; animation-delay: 6s; }
+        .heart:nth-child(5) { width: 28px; height: 28px; left: 85%; top: 15%; animation-delay: 8s; }
+
+        /* Yeni eklenen dilek ve soru kutuları */
+        #dilekKutusu, #dilekSorusu {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            display: none; /* Başlangıçta gizli */
+        }
+
+        #dilekKutusu p, #dilekSorusu p {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2em;
+            color: #d84357;
+            margin-bottom: 20px;
+        }
+
+        #dilekSorusu button {
+            background-color: #d84357;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #dilekSorusu button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+
+    <div class="container">
+        <h1>Ve İşte Senin Pastan!</h1>
+        <p>Hayatımın anlamı, bu özel günde dileyeceğin her şey gerçek olsun.</p>
+        <p>Önce mumları üflemeden bir dilek tutmanı istiyorum. Haydi, en derininden bir dilek tut...</p>
+
+        <div class="cake-container" id="cakeContainer">
+            <img src="cake.png" alt="Doğum Günü Pastası" class="cake-image" id="cakeImage">
+        </div>
+
+        <div class="message" id="cutMessage"></div>
+        <div class="small-message" id="afterCutMessage"></div>
+
+        <div id="dilekKutusu">
+            <p>Mumlar yanıyor, gözlerini kapat ve en içten dileğini tut. ❤️</p>
+        </div>
+
+        <div id="dilekSorusu">
+            <p>Dileğini tuttun mu canım?</p>
+            <button id="evetButton">Evet!</button>
+            <button id="hayirButton">Henüz Değil...</button>
+        </div>
+
+    </div>
+
+    <script>
+        const cakeContainer = document.getElementById('cakeContainer');
+        const cakeImage = document.getElementById('cakeImage');
+        const cutMessage = document.getElementById('cutMessage');
+        const afterCutMessage = document.getElementById('afterCutMessage');
+        const dilekKutusu = document.getElementById('dilekKutusu');
+        const dilekSorusu = document.getElementById('dilekSorusu');
+        const evetButton = document.getElementById('evetButton');
+        const hayirButton = document.getElementById('hayirButton');
+
+        let isCakeCut = false;
+
+        // Başlangıçta dilek kutusunu göster
+        dilekKutusu.style.display = 'block';
+
+        // 3 saniye sonra dilek sorusunu göster
+        setTimeout(() => {
+            dilekKutusu.style.display = 'none';
+            dilekSorusu.style.display = 'block';
+        }, 3000); // 3 saniye
+
+        evetButton.addEventListener('click', () => {
+            dilekSorusu.style.display = 'none';
+            // Dilek tutulduktan sonra pastayı kesmeye hazır hale getir
+            cakeContainer.style.cursor = 'pointer';
+            alert("Harika! Şimdi pastanı kesebilirsin. Tıklaman yeterli!");
+            cakeContainer.addEventListener('click', cutCake);
+        });
+
+        hayirButton.addEventListener('click', () => {
+            alert("Acele etme, dilediğin zaman dileğini tutabilirsin.");
+            // Tekrar dilek tutma kutusuna yönlendirebiliriz veya başka bir şey yapabiliriz.
+            // Şimdilik sadece uyarı verelim ve evet demesini bekleyelim.
+        });
+
+        function cutCake() {
+            if (!isCakeCut) {
+                cakeContainer.classList.add('cut-animation');
+                cutMessage.innerHTML = "İyi ki doğdun, iyi ki varsın benim kıymetlim! ❤️";
+                cutMessage.classList.add('show');
+
+                setTimeout(() => {
+                    afterCutMessage.innerHTML = "Mutlu, huzurlu senelerimiz ve en güzel günlerimiz olsun! Seni çok seviyorum!";
+                    afterCutMessage.classList.add('show');
+                }, 1500); // Küçük bir gecikme ile ikinci mesajı göster
+
+                isCakeCut = true;
+                generateConfetti(cakeContainer);
+                cakeContainer.style.cursor = 'default'; // Pasta kesildikten sonra imleci normale döndür
+
+                // Pastanın görselini kesik bir pasta görseliyle değiştirmek istersen:
+                // cakeImage.src = 'cut_cake.png'; // Bu görseli de hazırlaman gerekir
+            }
+        }
+
+
+        function generateConfetti(targetElement) {
+            const rect = targetElement.getBoundingClientRect();
+            const numberOfConfetti = 50;
+            for (let i = 0; i < numberOfConfetti; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * rect.width}px`;
+                confetti.style.top = `${Math.random() * rect.height / 2}px`; // Pastanın üst yarısından düşsün
+                confetti.style.animationDelay = `${Math.random() * 0.8}s`; // Rastgele gecikme
+                document.body.appendChild(confetti);
+
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
